@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Search</title>
+    <!-- Load Bootstrap CSS from static files -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <style>
+        body {
+            background-color: white;
+            font-family: 'Arial', sans-serif;
+            color: black;
+        }
+        .search-container {
+            margin-top: 50px;
+            max-width: 600px; /* Increased max-width for a wider input */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .card {
+            margin-top: 20px;
+            padding: 20px; /* Added padding to the card */
+        }
+        .btn-primary {
+            background-color: #673ab7;
+            border-color: #673ab7;
+            font-size: 1.2em; /* Increased button font size */
+            padding: 10px 20px; /* Increased button padding */
+        }
+        .btn-primary:hover {
+            background-color: #5e35b1;
+            border-color: #5e35b1;
+        }
+        h1 {
+            color: #673ab7;
+            font-size: 2.5em; /* Increased heading font size */
+        }
+        p {
+            font-size: 1.2em; /* Increased paragraph font size */
+        }
+        footer {
+            background-color: #673ab7;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        @media (max-width: 768px) {
+            .search-container {
+                max-width: 90%;
+                margin-top: 30px;
+            }
+            footer {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container search-container text-center">
+        <h1 class="mb-4">Word Finder</h1>
+        <p class="lead">Find the meaning, synonyms, and antonyms of any word!</p>
+        <div class="row justify-content-center">
+            <div class="col">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <input style="height: 50px; width: 400px; border-radius: 10px; border: 3px solid black;" type="text" class="form-control" placeholder="Enter a word..." name="search" value="{{ word }}" aria-label="Word">
+                        <button class="btn btn-primary float-end" style="border-radius: 30px;" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {% if word %}
+        <div class="card border border-lg "  style="border: 1px solid black;" id="resultsCard"> <!-- Added Bootstrap lg border class -->
+            <div class="card-body">
+                <h3 class="card-title"> <b>Word -->   </b>{{ word }}</h3>
+                <p class="card-text"><b>Meaning:</b> {{ meaning }}</p>
+                <p class="card-text"><b>Synonyms :</b> <br> {{ synonyms }}</p>
+                <p class="card-text"><b>Antonyms:</b> <br> {{ antonyms }}</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <footer>
+        <p>&copy; 2024 LAVKUSH django- dictionary</p>
+    </footer>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
